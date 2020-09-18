@@ -1,7 +1,7 @@
 var  token = localStorage.getItem("travelAgencytoken");
 
-function getToken(){
-    // Called whenether needed to renew token or get one
+const getToken = new Promise(function(resolve, reject) {
+    // Called whenether needed to renew token or get one, 
     fetch(
         "https://test.api.amadeus.com/v1/security/oauth2/token",
         {
@@ -12,15 +12,22 @@ function getToken(){
           }
         }
         ).then(function (response){
-        return response.json()
-        } )
-        .then(function (response){
-            token=response.access_token;
-            localStorage.setItem('travelAgencytoken',token);
-    })
-}
+            if (response.ok){
+                // Check if amadeus return error
+                response.json().then(function(response){
+                    newToken=response.access_token;
+                    localStorage.setItem('travelAgencytoken',newToken);
+                    // Return token
+                    resolve(newToken);
+                })
+            } else {
+                // Return error line if something went wrong
+                reject('Issue with getting Authentication');
+            }
+        })
+});
 
-function getRecommendedFlight(tries){
+function getRecommendedFlight(){
     query='?originLocationCode=BOS&destinationLocationCode=PAR&departureDate=2020-10-01&adults=1&travelClass=ECONOMY&nonStop=false&currencyCode=USD&maxPrice=500&max=20'
     // Start query at '?', then add more fields as user input. It can not be a '' string
 
@@ -38,12 +45,13 @@ function getRecommendedFlight(tries){
             }
     }).then(function(response){
         if (response.ok) {
+            // Check if amadeus return error
             response.json().then(function(response){
                 // Shows API respond
                 console.log(response);
             })
           } else {
-            //   Error response
+            //   Error responses
             response.json().then(function(error){
                 // 400 -> bad request
                 // 401 -> need to reauthorize 
@@ -51,14 +59,15 @@ function getRecommendedFlight(tries){
                 // console.log(error);
                 switch (error.errors[0].status) {
                     case 401:
-                        // Authorize error, recursive call
-                        getToken();
-                        setTimeout(function(){
-                            if (tries<3) getRecommendedFlight(tries+1);
-                            // Try 3 times before exiting, a safe case for recursive
-                            else console.log('Something went wrong'); // Uses modal later on
-                        },1000)
-                        // Wait 1s before retrying the API call
+                        // Authorize error, get a new token
+                        getToken.then(function(response){
+                            token = response;
+                            localStorage.setItem("travelAgencytoken",response);
+                            // Save new token, then recall the function
+                            getRecommendedFlight();
+                        }).catch(function(error){
+                            // Report error to page using modal
+                        })
                         break;
                     case 400:
                         // If conditioned the input fields correctly, this shouldn't be a problem
@@ -72,5 +81,14 @@ function getRecommendedFlight(tries){
     });
 }
 
-getRecommendedFlight(0); // 0 is important, to keep track of # of tries for authentication
-// Can also parse in Object with all of the input fields
+// ---EXAMPLE OF GETTING TOKEN WHEN THERE'S NONE---
+// if (!token) {
+//     getToken.then(function(response){
+//         token = response;
+//         // Start functions
+//     }).catch(function(error){
+//         // Report error to page
+//     })
+// }
+
+getRecommendedFlight();
