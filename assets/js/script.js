@@ -1,4 +1,4 @@
-token = 'tmks9Nb2Gt1bheWXgCRGGerFWjiN'; //Load respond with local memory
+var  token = localStorage.getItem("travelAgencytoken");
 
 function getToken(){
     // Called whenether needed to renew token or get one
@@ -15,14 +15,15 @@ function getToken(){
         return response.json()
         } )
         .then(function (response){
-            token=response.access_token; //And then save to local memory
+            token=response.access_token;
+            localStorage.setItem('travelAgencytoken',token);
     })
 }
-
 
 function getRecommendedFlight(tries){
     query='?originLocationCode=BOS&destinationLocationCode=PAR&departureDate=2020-10-01&adults=1&travelClass=ECONOMY&nonStop=false&currencyCode=USD&maxPrice=500&max=20'
     // Start query at '?', then add more fields as user input. It can not be a '' string
+
     // Example of fields:
     // originLocationCode='BOS';
     // destinationLocationCode='PAR';
@@ -45,7 +46,7 @@ function getRecommendedFlight(tries){
             //   Error response
             response.json().then(function(error){
                 // 400 -> bad request
-                // 401 -> need to reauthorize
+                // 401 -> need to reauthorize 
                 // 500 -> internal error
                 // console.log(error);
                 switch (error.errors[0].status) {
@@ -71,5 +72,5 @@ function getRecommendedFlight(tries){
     });
 }
 
-getRecommendedFlight(0); //0 is important, to keep track of # of tries
+getRecommendedFlight(0); // 0 is important, to keep track of # of tries for authentication
 // Can also parse in Object with all of the input fields
