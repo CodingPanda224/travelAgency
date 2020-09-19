@@ -15,16 +15,18 @@ const getToken = new Promise(function(resolve, reject) {
             if (response.ok){
                 // Check if amadeus return error
                 response.json().then(function(response){
-                    newToken=response.access_token;
-                    localStorage.setItem('travelAgencytoken',newToken);
-                    // Return token
-                    resolve(newToken);
-                })
+                newToken=response.access_token;
+                localStorage.setItem('travelAgencytoken',newToken);
+                // Return token
+                resolve(newToken);
+            })
             } else {
                 // Return error line if something went wrong
                 reject('Issue with getting Authentication');
             }
-        })
+        }).catch(function(error){
+            // Display connection error
+        });
 });
 
 function getRecommendedFlight(){
@@ -59,8 +61,8 @@ function getRecommendedFlight(){
                 // console.log(error);
                 switch (error.errors[0].status) {
                     case 401:
-                        // Authorize error, get a new token
-                        getToken.then(function(response){
+                            // Authorize error, get a new token
+                            getToken.then(function(response){
                             token = response;
                             localStorage.setItem("travelAgencytoken",response);
                             // Save new token, then recall the function
@@ -78,17 +80,18 @@ function getRecommendedFlight(){
                 }
             })
           }
+    }).catch(function(error){
+        // Display connection error
     });
 }
 
-// ---EXAMPLE OF GETTING TOKEN WHEN THERE'S NONE---
-// if (!token) {
-//     getToken.then(function(response){
-//         token = response;
-//         // Start functions
-//     }).catch(function(error){
-//         // Report error to page
-//     })
-// }
+if (!token) {
+    getToken.then(function(response){
+        token = response;
+        // Start functions
+    }).catch(function(error){
+        // Report error to page
+    })
+}
 
 getRecommendedFlight();
