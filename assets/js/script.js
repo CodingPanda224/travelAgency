@@ -30,7 +30,7 @@ const getToken = new Promise(function(resolve, reject) {
 });
 
 function getRecommendedFlight(){
-    query='?originLocationCode=BOS&destinationLocationCode=PAR&departureDate=2020-10-01&adults=1&travelClass=ECONOMY&nonStop=false&currencyCode=USD&maxPrice=500&max=20'
+    query='?originLocationCode=BOS&destinationLocationCode=CDG&departureDate=2020-10-01&adults=1&travelClass=ECONOMY&nonStop=false&currencyCode=USD&maxPrice=500&max=20'
     // Start query at '?', then add more fields as user input. It can not be a '' string
 
     // Example of fields:
