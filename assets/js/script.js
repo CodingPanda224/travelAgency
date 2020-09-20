@@ -1,5 +1,8 @@
 var  token = localStorage.getItem("travelAgencytoken");
 
+//Hotel search button
+var searchHotels = document.getElementById("hotel-search");
+
 function getToken(){
     // Called whenether needed to renew token or get one
     fetch(
@@ -74,3 +77,13 @@ function getRecommendedFlight(tries){
 
 getRecommendedFlight(0); // 0 is important, to keep track of # of tries for authentication
 // Can also parse in Object with all of the input fields
+
+//Function searching for Hotels
+function hotelSearch () {
+    console.log("hello")
+}
+
+searchHotels.addEventListener("click", function () {
+    hotelSearch();
+});
+
