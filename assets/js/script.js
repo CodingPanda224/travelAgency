@@ -80,7 +80,34 @@ getRecommendedFlight(0); // 0 is important, to keep track of # of tries for auth
 
 //Function searching for Hotels
 function hotelSearch () {
-    console.log("hello")
+    //console.log("hello")
+
+    //grab user's destination input
+    var destination = document.getElementById("destination").value
+
+    //grab start date
+
+    //grab end date 
+
+    if (destination.length > 0) {
+        var save = {
+            location: destination
+        }
+        var tripInfo = JSON.parse(localStorage.getItem("trips"))
+        if (tripInfo != undefined) {
+            tripInfo[tripInfo.length] = save
+            localStorage.setItem("trips", JSON.stringify(tripInfo))
+        }
+        else {
+            var tripInfo = [save]
+            localStorage.setItem("trips", JSON.stringify(tripInfo))
+        }
+    }
+
+    //if user doesn't enter a destination
+    if (destination === "") {
+        console.log("ERROR");
+    }
 }
 
 searchHotels.addEventListener("click", function () {
