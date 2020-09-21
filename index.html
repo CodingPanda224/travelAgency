@@ -1,54 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Agency</title>
-    <script src="https://use.fontawesome.com/a6ec0e93df.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Agency</title>
+  <script src="https://use.fontawesome.com/a6ec0e93df.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
 
-   <!-- Here is the Nav Bar  -->
-   <nav class="navbar" role="navigation" aria-label="main navigation">
+  <!-- Here is the Nav Bar  -->
+  <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <!-- Temp Logo to be added -->
+      <!-- Temp Logo to be added -->
       <a class="navbar-item" href=" ">
-        <img src="./assets/img/4115501.jpg" >
+        <img src="./assets/img/4115501.jpg">
       </a>
-  
-      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+        data-target="navbarBasicExample">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
-  
+
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
         <a class="navbar-item">
           Travel Agency
         </a>
-  
-        <a class="navbar-item">
-          Flights
-        </a>
 
-        <a class="navbar-item">
-            Hotels
-          </a>
 
-          <a class="navbar-item">
-            Combination
-          </a>
-  
+
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
-            More
+            More Travel
           </a>
-  
+
           <div class="navbar-dropdown">
+            <a class="navbar-item">
+              Flights
+            </a>
+
+            <a class="navbar-item">
+              Hotels
+            </a>
+
+            <a class="navbar-item">
+              Combination
+            </a>
             <a class="navbar-item">
               About
             </a>
@@ -62,7 +66,7 @@
           </div>
         </div>
       </div>
-  
+
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
@@ -81,33 +85,58 @@
 
 
 
-    <section class="hero">
-        <div >
+      <!-- Tabs for services -->
+    <div class="container">
+      <button class="tablink" onclick="openPage('Home', this, 'red')" id="defaultOpen">Home</button>
+      <button class="tablink" onclick="openPage('News', this, 'green')" >News</button>
+      <button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
+      <button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
 
-        </div>
-    </section>
+      <div id="Home" class="tabcontent">
+        <h3>Home</h3>
+        <p>Home is where the heart is..</p>
+      </div>
+
+      <div id="News" class="tabcontent">
+        <h3>Hotels</h3>
+        <p>Some news this fine day!</p>
+      </div>
+
+      <div id="Contact" class="tabcontent">
+        <h3>Contact</h3>
+        <p>Get in touch, or swing by for a cup of coffee.</p>
+      </div>
+
+      <div id="About" class="tabcontent">
+        <h3>About</h3>
+        <p>Who we are and what we do.</p>
+      </div>
+
+    </div>
 
 
 
-    <!-- Add a Trip -->
-    <div></div>
 
-    <!-- Select Destination and Budget -->
-    <div></div>
+  <!-- Add a Trip -->
+  <div></div>
 
-    <!-- Plane Info -->
-    <div></div>
+  <!-- Select Destination and Budget -->
+  <div></div>
 
-    <!-- Hotel Info -->
-    <div></div>
+  <!-- Plane Info -->
+  <div></div>
 
-    <!-- Summary of Trip -->
-    <div></div>
+  <!-- Hotel Info -->
 
-    <script src="./assets/js/script.js"></script>
+
+  <!-- Summary of Trip -->
+  <div></div>
+
+  <script src="./assets/js/script.js"></script>
 </body>
 
 <footer>
-    <a href="https://www.freepik.com/vectors/logo">Logo vector created by freepik - www.freepik.com</a>
+  <a href="https://www.freepik.com/vectors/logo">Logo vector created by freepik - www.freepik.com</a>
 </footer>
+
 </html>
