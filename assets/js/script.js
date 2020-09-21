@@ -108,6 +108,16 @@ function hotelSearch () {
     if (destination === "") {
         console.log("ERROR");
     }
+
+    //fetch hotel information
+    
+
+    //create container for hotel search results
+
+
+    //loop through array to make boxes for each result option
+
+
 }
 
 searchHotels.addEventListener("click", function () {
