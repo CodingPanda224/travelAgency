@@ -1,4 +1,4 @@
-token = localStorage.getItem('travelAgencytoken');
+var token = localStorage.getItem('travelAgencytoken');
 
 const getToken = new Promise(function(resolve, reject) {
     fetch(
@@ -59,7 +59,7 @@ function searchAirport(cityName){
                             token = response;
                             localStorage.setItem("travelAgencytoken",response);
                             // Save new token, then recall the function
-                            getRecommendedFlight();
+                            searchAirport(cityName);
                         }).catch(function(error){
                             // Report error to page using modal
                         })
@@ -116,7 +116,7 @@ function getRecommendedHotel(data){
                             token = response;
                             localStorage.setItem("travelAgencytoken",response);
                             // Save new token, then recall the function
-                            getRecommendedFlight();
+                            getRecommendedHotel(data);
                         }).catch(function(error){
                             // Report error to page using modal
                         })
@@ -176,7 +176,7 @@ function getRecommendedFlight(data){
                             token = response;
                             localStorage.setItem("travelAgencytoken",response);
                             // Save new token, then recall the function
-                            getRecommendedFlight();
+                            getRecommendedFlight(data);
                         }).catch(function(error){
                             // Report error to page using modal
                         })
