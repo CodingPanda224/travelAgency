@@ -1,5 +1,8 @@
 var  token = localStorage.getItem("travelAgencytoken");
 
+//Hotel search button
+var searchHotels = document.getElementById("hotel-search");
+
 function getToken(){
     // Called whenether needed to renew token or get one
     fetch(
@@ -124,8 +127,68 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById(pageName).style.display = "block";
   
     // Add the specific color to the button used to open the tab content
-    elmnt.style.backgroundColor = color;
+    // elmnt.style.backgroundColor = color;
   }
+
+
   
   // Get the element with id="defaultOpen" and click on it
   document.getElementById("defaultOpen").click();
+//Function searching for Hotels
+function hotelSearch () {
+    //console.log("hello")
+
+    //grab user's origin input
+    var origin = document.getElementById("origin").value
+
+    //grab user's destination input
+    var destination = document.getElementById("destination").value
+
+    //grab start date
+    var startDate = document.getElementById("starting-date").value
+
+    //grab end date 
+    var endDate = document.getElementById("ending-date").value
+
+    //store objects to local storage
+    if (destination.length > 0 && 
+        origin.length > 0 &&
+        startDate.length > 0 &&
+        endDate.length > 0) {
+        var save = {
+            endLocation: destination,
+            startingLocation: origin,
+            tripStart: startDate,
+            tripEnd: endDate
+        }
+        var tripInfo = JSON.parse(localStorage.getItem("trips"))
+        if (tripInfo != undefined) {
+            tripInfo[tripInfo.length] = save
+            localStorage.setItem("trips", JSON.stringify(tripInfo))
+        }
+        else {
+            var tripInfo = [save]
+            localStorage.setItem("trips", JSON.stringify(tripInfo))
+        }
+    }
+
+    //if user doesn't enter a destination
+    if (destination === "" || origin === "" || startDate === "" || endDate === "") {
+        console.log("ERROR");
+    }
+
+    //fetch hotel information
+    
+
+    //create container for hotel search results
+
+
+    //loop through array to make boxes for each result option
+
+
+}
+
+searchHotels.addEventListener("click", function () {
+    hotelSearch();
+});
+

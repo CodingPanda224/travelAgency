@@ -5,9 +5,14 @@ body, html {
     font-family: Arial;
   }
   
+  .searchBox{
+    background-image: url("../img/hero.jpg");
+    background-position: bottom;
+    background-repeat: no-repeat;
+    padding: 5%;
+  }
   /* Style tab links */
   .tablink {
-    border-right: solid 3px black;
     background-color: white;
     color: black;
     float: left;

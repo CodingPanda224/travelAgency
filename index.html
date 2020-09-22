@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Travel Agency</title>
   <script src="https://use.fontawesome.com/a6ec0e93df.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
@@ -16,7 +17,7 @@
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <!-- Temp Logo to be added -->
-      <a class="navbar-item" href=" ">
+      <a class="navbar-item" href="index.html">
         <img src="./assets/img/4115501.jpg">
       </a>
 
@@ -30,7 +31,7 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item">
+        <a class="navbar-item" href="index.html">
           Travel Agency
         </a>
 
@@ -42,7 +43,7 @@
           </a>
 
           <div class="navbar-dropdown">
-            <a class="navbar-item">
+            <!-- <a class="navbar-item">
               Flights
             </a>
 
@@ -52,11 +53,11 @@
 
             <a class="navbar-item">
               Combination
-            </a>
-            <a class="navbar-item">
+            </a> -->
+            <a class="navbar-item" href="./pages/about.html">
               About
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href="./pages/contactus.html">
               Contact
             </a>
             <hr class="navbar-divider">
@@ -70,7 +71,7 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-primary">
+            <a class="button is-dark">
               <strong>Sign up</strong>
             </a>
             <a class="button is-light">
@@ -84,23 +85,131 @@
 
 
 
-
+    <div class="searchBox">
       <!-- Tabs for services -->
     <div class="container">
-      <button class="tablink" onclick="openPage('Home', this, 'red')" id="defaultOpen">Home</button>
-      <button class="tablink" onclick="openPage('News', this, 'green')" >News</button>
-      <button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
-      <button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
+      <button class="tablink" onclick="openPage('Flights', this, 'red')" id="defaultOpen">Flights</button>
+      <button class="tablink" onclick="openPage('Hotel', this, 'green')" >Hotel</button>
+      <!-- <button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
+      <button class="tablink" onclick="openPage('About', this, 'orange')">About</button> -->
 
-      <div id="Home" class="tabcontent">
-        <h3>Home</h3>
-        <p>Home is where the heart is..</p>
+      <div id="Flights" class="tabcontent">
+        <section class="section">
+          <div class="container is-fluid hide">
+              <!-- search inputs -->
+              <div class="columns is mobile">
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Starting from" id="origin">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Going to" id="destination">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="date" placeholder="mm/dd/yyyy" id="starting-date">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="date" placeholder="mm/dd/yyyy" id="ending-date">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+              </div>
+              
+              <button class="button is-dark" id="flight-search">Search</button>
+              <!-- add the 'is-loading' class when fetching API -->
+  
+          </div> <!-- end of container -->
+      </section>
       </div>
 
-      <div id="News" class="tabcontent">
-        <h3>Hotels</h3>
-        <p>Some news this fine day!</p>
+      <div id="Hotel" class="tabcontent">
+        <section class="section">
+          <div class="container is-fluid hide">
+              <!-- search inputs -->
+              <div class="columns is mobile">
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Starting from" id="origin">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Going to" id="destination">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="date" placeholder="mm/dd/yyyy" id="starting-date">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="date" placeholder="mm/dd/yyyy" id="ending-date">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+              </div>
+              
+              <button class="button is-dark" id="hotel-search">Search</button>
+              <!-- add the 'is-loading' class when fetching API -->
+  
+          </div> <!-- end of container -->
+      </section>
       </div>
+    <!-- Hotel Info -->
+
 
       <div id="Contact" class="tabcontent">
         <h3>Contact</h3>
@@ -113,6 +222,7 @@
       </div>
 
     </div>
+  </div>
 
 
 
