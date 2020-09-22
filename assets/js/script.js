@@ -1,7 +1,5 @@
 var  token = localStorage.getItem("travelAgencytoken");
 
-//starting date
-var startingDate = document.getElementById("startingDate");
 //Hotel search button
 var searchHotels = document.getElementById("hotel-search");
 
@@ -91,16 +89,22 @@ function hotelSearch () {
     //grab user's destination input
     var destination = document.getElementById("destination").value
 
-
     //grab start date
+    var startDate = document.getElementById("starting-date").value
 
     //grab end date 
+    var endDate = document.getElementById("ending-date").value
 
     //store objects to local storage
-    if (destination.length > 0 && origin.length > 0) {
+    if (destination.length > 0 && 
+        origin.length > 0 &&
+        startDate.length > 0 &&
+        endDate.length > 0) {
         var save = {
             endLocation: destination,
-            startingLocation: origin
+            startingLocation: origin,
+            tripStart: startDate,
+            tripEnd: endDate
         }
         var tripInfo = JSON.parse(localStorage.getItem("trips"))
         if (tripInfo != undefined) {
@@ -114,7 +118,7 @@ function hotelSearch () {
     }
 
     //if user doesn't enter a destination
-    if (destination === "" || origin === "") {
+    if (destination === "" || origin === "" || startDate === "" || endDate === "") {
         console.log("ERROR");
     }
 
