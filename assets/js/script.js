@@ -82,6 +82,9 @@ getRecommendedFlight(0); // 0 is important, to keep track of # of tries for auth
 
 
 
+
+
+
 // NavBar Usage
 document.addEventListener('DOMContentLoaded', () => {
 
