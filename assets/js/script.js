@@ -1,10 +1,9 @@
-var  token = localStorage.getItem("travelAgencytoken");
-
 //Hotel search button
 var searchHotels = document.getElementById("hotel-search");
 
-function getToken(){
-    // Called whenether needed to renew token or get one
+var token = localStorage.getItem('travelAgencytoken');
+
+const getToken = new Promise(function(resolve, reject) {
     fetch(
         "https://test.api.amadeus.com/v1/security/oauth2/token",
         {
@@ -15,38 +14,42 @@ function getToken(){
           }
         }
         ).then(function (response){
-        return response.json()
-        } )
-        .then(function (response){
-            token=response.access_token;
-            localStorage.setItem('travelAgencytoken',token);
-    })
-}
+            if (response.ok){
+                // Check if amadeus return error
+                response.json().then(function(response){
+                newToken=response.access_token;
+                localStorage.setItem('travelAgencytoken',newToken);
+                // Return token
+                resolve(newToken);
+            })
+            } else {
+                // Return error line if something went wrong
+                reject('Issue with getting Authentication');
+            }
+        }).catch(function(error){
+            // Display connection error
+        });
+});
 
-function getRecommendedFlight(tries){
-    query='?originLocationCode=BOS&destinationLocationCode=PAR&departureDate=2020-10-01&adults=1&travelClass=ECONOMY&nonStop=false&currencyCode=USD&maxPrice=500&max=20'
-    // Start query at '?', then add more fields as user input. It can not be a '' string
 
-    // Example of fields:
-    // originLocationCode='BOS';
-    // destinationLocationCode='PAR';
-    // departureDate='2020-10-01';
-    // returnDate='';
-    // adults=1;
-    // etc.
-    fetch('https://test.api.amadeus.com/v2/shopping/flight-offers'+query,
+
+function searchAirport(cityName){
+    query='?subType=AIRPORT&page%5Blimit%5D=10&page%5Boffset%5D=0&sort=analytics.travelers.score&view=FULL&keyword=' +cityName;
+    
+    fetch('https://test.api.amadeus.com/v1/reference-data/locations'+query,
         {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
     }).then(function(response){
         if (response.ok) {
+            // Check if amadeus return error
             response.json().then(function(response){
                 // Shows API respond
                 console.log(response);
             })
           } else {
-            //   Error response
+            //   Error responses
             response.json().then(function(error){
                 // 400 -> bad request
                 // 401 -> need to reauthorize 
@@ -54,30 +57,186 @@ function getRecommendedFlight(tries){
                 // console.log(error);
                 switch (error.errors[0].status) {
                     case 401:
-                        // Authorize error, recursive call
-                        getToken();
-                        setTimeout(function(){
-                            if (tries<3) getRecommendedFlight(tries+1);
-                            // Try 3 times before exiting, a safe case for recursive
-                            else console.log('Something went wrong'); // Uses modal later on
-                        },1000)
-                        // Wait 1s before retrying the API call
+                            // Authorize error, get a new token
+                            getToken.then(function(response){
+                            token = response;
+                            localStorage.setItem("travelAgencytoken",response);
+                            // Save new token, then recall the function
+                            searchAirport(cityName);
+                        }).catch(function(error){
+                            // Report error to page using modal
+                        })
                         break;
                     case 400:
                         // If conditioned the input fields correctly, this shouldn't be a problem
                     case 500:
                         // Show there's error with server through modal
                     default: 
-                        console.log('Something went wrong'); // Uses modal later on
+                        console.log('Something went wrong with searching city'); // Uses modal later on
                 }
             })
           }
+    }).catch(function(error){
+        // Display connection error
     });
 }
 
-getRecommendedFlight(0); // 0 is important, to keep track of # of tries for authentication
-// Can also parse in Object with all of the input fields
+function getRecommendedHotel(data){
+    query='?radius=20&radiusUnit=MILE&amenities=&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=NONE&sort=NONE' 
+    
+    if (data.cityCode) query = query + '&cityCode=' + data.cityCode;
+    if (data.checkInDate) query = query + '&checkInDate=' + data.checkInDate;
+    if (data.checkOutDate) query = query + '&checkOutDate=' + data.checkOutDate;
+    if (data.returnDate) query = query + '&returnDate=' + data.returnDate;
+    if (data.roomQuantity) query = query + '&roomQuantity=' + data.roomQuantity;
+    if (data.adults) query = query + '&adults=' + data.adults;
+    if (data.childAges) query = query + '&childAges=' + data.childAges;
+    if (data.currency) query = query + '&currency=' + data.currency;
+   
+    fetch('https://test.api.amadeus.com/v2/shopping/hotel-offers'+query,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+    }).then(function(response){
+        if (response.ok) {
+            // Check if amadeus return error
+            response.json().then(function(response){
+                // Shows API respond
+                console.log(response);
+            })
+          } else {
+            //   Error responses
+            response.json().then(function(error){
+                // 400 -> bad request
+                // 401 -> need to reauthorize 
+                // 500 -> internal error
+                // console.log(error);
+                switch (error.errors[0].status) {
+                    case 401:
+                            // Authorize error, get a new token
+                            getToken.then(function(response){
+                            token = response;
+                            localStorage.setItem("travelAgencytoken",response);
+                            // Save new token, then recall the function
+                            getRecommendedHotel(data);
+                        }).catch(function(error){
+                            // Report error to page using modal
+                        })
+                        break;
+                    case 400:
+                        // If conditioned the input fields correctly, this shouldn't be a problem
+                    case 500:
+                        // Show there's error with server through modal
+                    default: 
+                        console.log('Something went wrong with looking for hotels'); // Uses modal later on
+                }
+            })
+          }
+    }).catch(function(error){
+        // Display connection error
+    });
+}
 
+function getRecommendedFlight(data){
+    query='?max=20' //return maximum number of search
+    
+    if (data.originLocationCode) query = query + '&originLocationCode=' + data.originLocationCode;
+    if (data.destinationLocationCode) query = query + '&destinationLocationCode=' + data.destinationLocationCode;
+    if (data.departureDate) query = query + '&departureDate=' + data.departureDate;
+    if (data.returnDate) query = query + '&returnDate=' + data.returnDate;
+    if (data.adults) query = query + '&adults=' + data.adults;
+    if (data.children) query = query + '&children=' + data.children;
+    if (data.infants) query = query + '&infants=' + data.infants;
+    if (data.travelClass) query = query + '&travelClass=' + data.travelClass;
+    if (data.nonStop) query = query + '&nonStop=' + data.nonStop;
+    if (data.currencyCode) query = query + '&currencyCode=' + data.currencyCode;
+
+    
+    fetch('https://test.api.amadeus.com/v2/shopping/flight-offers'+query,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+    }).then(function(response){
+        if (response.ok) {
+            // Check if amadeus return error
+            response.json().then(function(response){
+                // Shows API respond
+                console.log(response);
+            })
+          } else {
+            //   Error responses
+            response.json().then(function(error){
+                // 400 -> bad request
+                // 401 -> need to reauthorize 
+                // 500 -> internal error
+                // console.log(error);
+                switch (error.errors[0].status) {
+                    case 401:
+                            // Authorize error, get a new token
+                            getToken.then(function(response){
+                            token = response;
+                            localStorage.setItem("travelAgencytoken",response);
+                            // Save new token, then recall the function
+                            getRecommendedFlight(data);
+                        }).catch(function(error){
+                            // Report error to page using modal
+                        })
+                        break;
+                    case 400:
+                        // If conditioned the input fields correctly, this shouldn't be a problem
+                    case 500:
+                        // Show there's error with server through modal
+                    default: 
+                        console.log('Something went wrong with looking for flights'); // Uses modal later on
+                }
+            })
+          }
+    }).catch(function(error){
+        // Display connection error
+    });
+}
+
+if (!token) {
+    getToken.then(function(response){
+        token = response;
+        // Start functions
+    }).catch(function(error){
+        // Report error to page
+    })
+}
+
+// searchAirport('London');
+
+// Example Flight search:
+var searchFlightData = {
+    originLocationCode:'BOS',
+    destinationLocationCode:'PAR',
+    departureDate:'2020-10-01',
+    returnDate:'',
+    adults:2,
+    children:0,
+    infants:0,
+    travelClass:'ECONOMY',
+    nonStop:'false',
+    currencyCode:'USD'
+}
+// getRecommendedFlight(searchFlightData);
+
+
+// Example of Hotel search
+var searchHotelData = {
+    cityCode:'MCO',  // Use airport code here
+    checkInDate : '2020-10-05',
+    checkOutDate : '2020-10-08',
+    roomQuantity : 1,
+    adults : 2,
+    childAges: '14, 12', //  comma seperated, user input
+    currency : 'USD'
+}
+
+//getRecommendedHotel(searchHotelData);
 
 //Function searching for Hotels
 function hotelSearch () {
