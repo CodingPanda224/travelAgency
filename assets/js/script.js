@@ -1,5 +1,7 @@
 var  token = localStorage.getItem("travelAgencytoken");
 
+//starting date
+var startingDate = document.getElementById("startingDate");
 //Hotel search button
 var searchHotels = document.getElementById("hotel-search");
 
@@ -77,6 +79,16 @@ function getRecommendedFlight(tries){
 
 getRecommendedFlight(0); // 0 is important, to keep track of # of tries for authentication
 // Can also parse in Object with all of the input fields
+
+//starting date was clicked
+startingDate.addEventListener("click", function() {
+   startingDate.datepicker({
+       minDate: 1,
+       onClose: function() {
+           $(this).trigger("change");
+       }
+   })
+})
 
 //Function searching for Hotels
 function hotelSearch () {
