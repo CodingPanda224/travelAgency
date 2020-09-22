@@ -82,22 +82,16 @@ getRecommendedFlight(0); // 0 is important, to keep track of # of tries for auth
 function hotelSearch () {
     //console.log("hello")
 
-    //grab user's origin input
-    var origin = document.getElementById("origin").value
-
     //grab user's destination input
     var destination = document.getElementById("destination").value
-
 
     //grab start date
 
     //grab end date 
 
-    //store objects to local storage
-    if (destination.length > 0 && origin.length > 0) {
+    if (destination.length > 0) {
         var save = {
-            endLocation: destination,
-            startingLocation: origin
+            location: destination
         }
         var tripInfo = JSON.parse(localStorage.getItem("trips"))
         if (tripInfo != undefined) {
@@ -111,7 +105,7 @@ function hotelSearch () {
     }
 
     //if user doesn't enter a destination
-    if (destination === "" || origin === "") {
+    if (destination === "") {
         console.log("ERROR");
     }
 
