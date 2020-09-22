@@ -33,8 +33,8 @@ const getToken = new Promise(function(resolve, reject) {
 
 
 
-function searchAirport(cityName){
-    query='?subType=AIRPORT&page%5Blimit%5D=10&page%5Boffset%5D=0&sort=analytics.travelers.score&view=FULL&keyword=' +cityName;
+function searchAirport(destination){
+    query='?subType=AIRPORT&page%5Blimit%5D=10&page%5Boffset%5D=0&sort=analytics.travelers.score&view=FULL&keyword=' +destination;
     
     fetch('https://test.api.amadeus.com/v1/reference-data/locations'+query,
         {
@@ -207,7 +207,7 @@ if (!token) {
     })
 }
 
-// searchAirport('London');
+
 
 // Example Flight search:
 var searchFlightData = {
@@ -282,6 +282,7 @@ function hotelSearch () {
     }
 
     //fetch hotel information
+    searchAirport(destination);
     
 
     //create container for hotel search results
