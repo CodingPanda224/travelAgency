@@ -64,8 +64,6 @@ function searchAirport(hotelCity){
                 airportDropdown.appendChild(userSelectsAirport);
                 airportDropdown.appendChild(airportSelection);
 
-                console.log(response.data[0].name)
-
                 //loop through airport names array and display as options in dropdown
                 for (i = 0; i < response.data.length; i++) {
                     var airports = document.createElement("option")
@@ -75,6 +73,8 @@ function searchAirport(hotelCity){
                     //append <option> selections to <select> tag in html
                     airportSelection.appendChild(airports) 
                 }
+
+                
             })
           } else {
             //   Error responses
