@@ -56,21 +56,24 @@ function searchAirport(hotelCity){
                 var userSelectsAirport = document.createElement("p")
                 userSelectsAirport.innerHTML = "Select the aiport you are arriving at: " 
 
+                //create select tag
                 var airportSelection = document.createElement("select")
+                airportSelection.setAttribute("name", "airports")
 
+                //append select tag and p tag to airport dropdown div
                 airportDropdown.appendChild(userSelectsAirport);
                 airportDropdown.appendChild(airportSelection);
 
-                
+                console.log(response.data[0].name)
 
-                for (i=0; i > response.data.length; i++) {
+                //loop through airport names array and display as options in dropdown
+                for (i = 0; i < response.data.length; i++) {
                     var airports = document.createElement("option")
                     airports.setAttribute("value", response.data[i].name)
                     airports.innerHTML = response.data[i].name
 
-                    console.log(airports);
-
-                    //airportSelection.appendChild(airports)
+                    //append <option> selections to <select> tag in html
+                    airportSelection.appendChild(airports) 
                 }
             })
           } else {
