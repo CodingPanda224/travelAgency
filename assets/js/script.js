@@ -3,6 +3,7 @@ var searchHotels = document.getElementById("hotel-search");
 //airport dropdown div
 var airportDropdown = document.getElementById("airport-dropdown")
 
+
 var token = localStorage.getItem('travelAgencytoken');
 
 const getToken = new Promise(function(resolve, reject) {
@@ -74,6 +75,8 @@ function searchAirport(hotelCity){
                     airportSelection.appendChild(airports) 
                 }
 
+                //search for recommended hotels
+                //getRecommendedHotel(searchHotelData);
                 
             })
           } else {
@@ -254,30 +257,38 @@ var searchFlightData = {
 // getRecommendedFlight(searchFlightData);
 
 
-// Example of Hotel search
-var searchHotelData = {
-    cityCode:'MCO',  // Use airport code here
-    checkInDate : '2020-10-05',
-    checkOutDate : '2020-10-08',
-    roomQuantity : 1,
-    adults : 2,
-    childAges: '14, 12', //  comma seperated, user input
-    currency : 'USD'
-}
-
-//getRecommendedHotel(searchHotelData);
-
 //Function searching for Hotels
 function hotelSearch () {
 
-    //grab user's destination input
+     
+    //user's destination input
     var hotelCity = document.getElementById("destination").value
 
-    //grab start date
-    var startDate = document.getElementById("starting-date").value
+    //start date
+    var startDate = document.getElementById("hotel-starting-date").value
 
-    //grab end date 
-    var endDate = document.getElementById("ending-date").value
+    //end date 
+    var endDate = document.getElementById("hotel-ending-date").value
+
+    //room number
+    var roomNumber = document.getElementById("room-number").value
+
+    //adults
+    var adultNumber = document.getElementById("room-number").value
+
+    //ages of children
+    var childrenAges = document.getElementById("children-ages").value
+
+    //Hotel search Variable
+    var searchHotelData = {
+    cityCode:'MCO',  // Use airport code here
+    checkInDate : startDate,
+    checkOutDate : endDate,
+    roomQuantity : roomNumber,
+    adults : adultNumber,
+    childAges: childrenAges, //  comma seperated, user input
+    currency : 'USD'
+    }
 
     //store objects to local storage
     if (destination.length > 0 && 
@@ -300,12 +311,14 @@ function hotelSearch () {
     }
 
     //if user doesn't enter a destination
-    if (hotelCity === "" || startDate === "" || endDate === "") {
-        console.log("ERROR");
-    }
+    //if (hotelCity === "" || startDate === "" || endDate === "") {
+        //console.log("ERROR");
+    //}
+
+    console.log(searchHotelData);
 
     //fetch airport code for hotel
-    searchAirport(hotelCity);
+    //searchAirport(hotelCity);
 
    
 
