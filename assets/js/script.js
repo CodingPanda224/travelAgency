@@ -59,7 +59,6 @@ function searchAirport(hotelCity){
 
                 //create select tag
                 var airportSelection = document.createElement("select")
-                airportSelection.addEventListener("change", getSelectedHotelValue())
                 airportSelection.setAttribute("name", "airports")
                 airportSelection.setAttribute("id", "select-airport")
 
@@ -77,6 +76,8 @@ function searchAirport(hotelCity){
                     airportSelection.appendChild(airports) 
                 }
 
+                airportSelection.addEventListener("change", getSelectedHotelValue)
+                
                 //search for recommended hotels
                 //getRecommendedHotel(searchHotelData);
                 
