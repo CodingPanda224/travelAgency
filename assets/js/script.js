@@ -60,6 +60,7 @@ function searchAirport(hotelCity){
                 //create select tag
                 var airportSelection = document.createElement("select")
                 airportSelection.setAttribute("name", "airports")
+                airportSelection.setAttribute("id", "select-airport")
 
                 //append select tag and p tag to airport dropdown div
                 airportDropdown.appendChild(userSelectsAirport);
@@ -75,6 +76,15 @@ function searchAirport(hotelCity){
                     airportSelection.appendChild(airports) 
                 }
 
+                function getSelectedText(){    
+                    var getAirportDropdown = document.getElementById("select-airport");
+                    var chosenAirport = getAirportDropdown.options[getAirportDropdown.selectedIndex].text;
+                    console.log(chosenAirport);
+                    return chosenAirport;
+                    
+                  }
+
+                  getSelectedText();
                 //search for recommended hotels
                 //getRecommendedHotel(searchHotelData);
                 
@@ -264,6 +274,9 @@ function hotelSearch () {
     //user's destination input
     var hotelCity = document.getElementById("destination").value
 
+    //fetch airport code for hotel
+    searchAirport(hotelCity);
+
     //start date
     var startDate = document.getElementById("hotel-starting-date").value
 
@@ -316,11 +329,6 @@ function hotelSearch () {
     //}
 
     console.log(searchHotelData);
-
-    //fetch airport code for hotel
-    //searchAirport(hotelCity);
-
-   
 
 
     //create container for hotel search results
