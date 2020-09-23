@@ -59,6 +59,7 @@ function searchAirport(hotelCity){
 
                 //create select tag
                 var airportSelection = document.createElement("select")
+                airportSelection.addEventListener("change", getSelectedHotelValue())
                 airportSelection.setAttribute("name", "airports")
                 airportSelection.setAttribute("id", "select-airport")
 
@@ -69,22 +70,13 @@ function searchAirport(hotelCity){
                 //loop through airport names array and display as options in dropdown
                 for (i = 0; i < response.data.length; i++) {
                     var airports = document.createElement("option")
-                    airports.setAttribute("value", response.data[i].name)
+                    airports.setAttribute("value", response.data[i].address.cityCode)
                     airports.innerHTML = response.data[i].name
 
                     //append <option> selections to <select> tag in html
                     airportSelection.appendChild(airports) 
                 }
 
-                function getSelectedText(){    
-                    var getAirportDropdown = document.getElementById("select-airport");
-                    var chosenAirport = getAirportDropdown.options[getAirportDropdown.selectedIndex].text;
-                    console.log(chosenAirport);
-                    return chosenAirport;
-                    
-                  }
-
-                  getSelectedText();
                 //search for recommended hotels
                 //getRecommendedHotel(searchHotelData);
                 
@@ -122,6 +114,14 @@ function searchAirport(hotelCity){
         // Display connection error
     });
 }
+
+function getSelectedHotelValue(){    
+    var getAirportDropdown = document.getElementById("select-airport");
+    var chosenAirport = getAirportDropdown.options[getAirportDropdown.selectedIndex].value;
+    console.log(chosenAirport);
+    return chosenAirport;
+    
+  }
 
 function getRecommendedHotel(data){
     query='?radius=20&radiusUnit=MILE&amenities=&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=NONE&sort=NONE' 
@@ -269,7 +269,6 @@ var searchFlightData = {
 
 //Function searching for Hotels
 function hotelSearch () {
-
      
     //user's destination input
     var hotelCity = document.getElementById("destination").value
