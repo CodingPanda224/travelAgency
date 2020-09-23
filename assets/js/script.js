@@ -78,9 +78,6 @@ function searchAirport(hotelCity){
 
                 airportSelection.addEventListener("change", getSelectedHotelValue)
                 
-                //search for recommended hotels
-                //getRecommendedHotel(searchHotelData);
-                
             })
           } else {
             //   Error responses
@@ -121,7 +118,6 @@ function getSelectedHotelValue(){
     var chosenAirport = getAirportDropdown.options[getAirportDropdown.selectedIndex].value;
     console.log(chosenAirport);
     return chosenAirport;
-    
   }
 
 function getRecommendedHotel(data){
@@ -277,24 +273,24 @@ function hotelSearch () {
     //fetch airport code for hotel
     searchAirport(hotelCity);
 
-    //start date
+    //user start date
     var startDate = document.getElementById("hotel-starting-date").value
 
-    //end date 
+    //user end date 
     var endDate = document.getElementById("hotel-ending-date").value
 
-    //room number
+    //user room number
     var roomNumber = document.getElementById("room-number").value
 
-    //adults
+    //user adults
     var adultNumber = document.getElementById("room-number").value
 
-    //ages of children
+    //userages of children
     var childrenAges = document.getElementById("children-ages").value
 
     //Hotel search Variable
     var searchHotelData = {
-    cityCode:'MCO',  // Use airport code here
+    cityCode: 'MIA',
     checkInDate : startDate,
     checkOutDate : endDate,
     roomQuantity : roomNumber,
@@ -330,12 +326,8 @@ function hotelSearch () {
 
     console.log(searchHotelData);
 
-
-    //create container for hotel search results
-
-
-    //loop through array to make boxes for each result option
-
+      //search for recommended hotels
+      getRecommendedHotel(searchHotelData);
 
 }
 
