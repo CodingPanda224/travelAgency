@@ -1,5 +1,7 @@
 //Hotel search button
 var searchHotels = document.getElementById("hotel-search");
+//airport dropdown div
+var airportDropdown = document.getElementById("airport-dropdown")
 
 var token = localStorage.getItem('travelAgencytoken');
 
@@ -33,8 +35,8 @@ const getToken = new Promise(function(resolve, reject) {
 
 
 
-function searchAirport(destination){
-    query='?subType=AIRPORT&page%5Blimit%5D=10&page%5Boffset%5D=0&sort=analytics.travelers.score&view=FULL&keyword=' +destination;
+function searchAirport(hotelCity){
+    query='?subType=AIRPORT&page%5Blimit%5D=10&page%5Boffset%5D=0&sort=analytics.travelers.score&view=FULL&keyword=' +hotelCity;
     
     fetch('https://test.api.amadeus.com/v1/reference-data/locations'+query,
         {
@@ -47,6 +49,29 @@ function searchAirport(destination){
             response.json().then(function(response){
                 // Shows API respond
                 console.log(response);
+
+                //console.log(response.data[0]);
+
+                //create dropdown of airports
+                var userSelectsAirport = document.createElement("p")
+                userSelectsAirport.innerHTML = "Select the aiport you are arriving at: " 
+
+                var airportSelection = document.createElement("select")
+
+                airportDropdown.appendChild(userSelectsAirport);
+                airportDropdown.appendChild(airportSelection);
+
+                
+
+                for (i=0; i > response.data.length; i++) {
+                    var airports = document.createElement("option")
+                    airports.setAttribute("value", response.data[i].name)
+                    airports.innerHTML = response.data[i].name
+
+                    console.log(airports);
+
+                    //airportSelection.appendChild(airports)
+                }
             })
           } else {
             //   Error responses
@@ -76,6 +101,7 @@ function searchAirport(destination){
                 }
             })
           }
+    
     }).catch(function(error){
         // Display connection error
     });
@@ -240,13 +266,9 @@ var searchHotelData = {
 
 //Function searching for Hotels
 function hotelSearch () {
-    //console.log("hello")
-
-    //grab user's origin input
-    var origin = document.getElementById("origin").value
 
     //grab user's destination input
-    var destination = document.getElementById("destination").value
+    var hotelCity = document.getElementById("destination").value
 
     //grab start date
     var startDate = document.getElementById("starting-date").value
@@ -256,12 +278,10 @@ function hotelSearch () {
 
     //store objects to local storage
     if (destination.length > 0 && 
-        origin.length > 0 &&
         startDate.length > 0 &&
         endDate.length > 0) {
         var save = {
-            endLocation: destination,
-            startingLocation: origin,
+            endLocation: hotelCity,
             tripStart: startDate,
             tripEnd: endDate
         }
@@ -277,13 +297,15 @@ function hotelSearch () {
     }
 
     //if user doesn't enter a destination
-    if (destination === "" || origin === "" || startDate === "" || endDate === "") {
+    if (hotelCity === "" || startDate === "" || endDate === "") {
         console.log("ERROR");
     }
 
-    //fetch hotel information
-    searchAirport(destination);
-    
+    //fetch airport code for hotel
+    searchAirport(hotelCity);
+
+   
+
 
     //create container for hotel search results
 
