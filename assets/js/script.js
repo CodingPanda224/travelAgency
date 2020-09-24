@@ -1,6 +1,12 @@
 //Flight Search button
 var searchFlights = document.getElementById("flight-search");
 
+//Hotel search button
+var searchHotels = document.getElementById("hotel-search");
+//airport dropdown div
+var airportDropdown = document.getElementById("airport-dropdown")
+var searchAirportCode = document.getElementById("destination-hotel")
+
 
 // NavBar Usage
 document.addEventListener('DOMContentLoaded', () => {
@@ -170,7 +176,7 @@ function searchAirport(hotelCity) {
                             token = response;
                             localStorage.setItem("travelAgencytoken", response);
                             // Save new token, then recall the function
-                            searchAirport(cityName);
+                            searchAirport(hotelCity);
                         }).catch(function (error) {
                             // Report error to page using modal
                         })
@@ -199,58 +205,94 @@ function searchAirport(hotelCity) {
 //return chosenAirport; 
 //}
 
-function getRecommendedHotel(data) {
-    query = '?radius=20&radiusUnit=MILE&amenities=&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=NONE&sort=NONE'
-
-    if (data.cityCode) query = query + '&cityCode=' + data.cityCode;
-    if (data.checkInDate) query = query + '&checkInDate=' + data.checkInDate;
-    if (data.checkOutDate) query = query + '&checkOutDate=' + data.checkOutDate;
-    if (data.returnDate) query = query + '&returnDate=' + data.returnDate;
-    if (data.roomQuantity) query = query + '&roomQuantity=' + data.roomQuantity;
-    if (data.adults) query = query + '&adults=' + data.adults;
-    if (data.childAges) query = query + '&childAges=' + data.childAges;
-    if (data.currency) query = query + '&currency=' + data.currency;
-
-    fetch('https://test.api.amadeus.com/v2/shopping/hotel-offers' + query, {
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
-    }).then(function (response) {
+function getRecommendedHotel(hotelSearchData){
+    query='?radius=20&radiusUnit=MILE&amenities=&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=NONE&sort=NONE' 
+    
+    if (hotelSearchData.cityCode) query = query + '&cityCode=' + hotelSearchData.cityCode;
+    if (hotelSearchData.checkInDate) query = query + '&checkInDate=' + hotelSearchData.checkInDate;
+    if (hotelSearchData.checkOutDate) query = query + '&checkOutDate=' + hotelSearchData.checkOutDate;
+    if (hotelSearchData.returnDate) query = query + '&returnDate=' + hotelSearchData.returnDate;
+    if (hotelSearchData.roomQuantity) query = query + '&roomQuantity=' + hotelSearchData.roomQuantity;
+    if (hotelSearchData.adults) query = query + '&adults=' + hotelSearchData.adults;
+    if (hotelSearchData.childAges) query = query + '&childAges=' + hotelSearchData.childAges;
+    if (hotelSearchData.currency) query = query + '&currency=' + hotelSearchData.currency;
+   
+    fetch('https://test.api.amadeus.com/v2/shopping/hotel-offers'+query,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+    }).then(function(response){
         if (response.ok) {
             // Check if amadeus return error
-            response.json().then(function (response) {
+            response.json().then(function(response){
                 // Shows API respond
                 console.log(response);
+
+                //clear container
+                $("#recommended-hotels").html("");
+
+                //loop through response array
+                for (var i = 0; i < response.data.length; i++) {
+                    
+                    //get data for one day
+                    var hotelName = response.data[i].hotel.name;
+                    var distance = response.data[i].hotel.hotelDistance.distance;
+                    var checkIn = response.data[i].offers[0].checkInDate;
+                    var checkOut = response.data[i].offers[0].checkInDate;
+                    var guests = response.data[i].offers[0].guests.adults;
+                    var price = response.data[i].offers[0].price.total;
+                    
+                
+
+                    //create layout for contents of div
+                    var divEl = $("<div>").html(
+                        "<div class='column'> <h3>" + hotelName + "</h3><p>Distance from Airport: " + distance + 
+                        "miles</p><p>Check-in Date: " + checkIn + "</p><p>Check-out Date: " + checkOut + "</p><p>Guests: " + guests +
+                        "</p><h5>Price: $" + price + "</h5></div>")
+
+                    divEl.addClass("column hotels");
+
+                    console.log(divEl);
+                    
+
+                    //append element to the container
+                    $("#recommended-hotels").append(divEl)
+
+                     //add loading class to button
+                    searchHotels.setAttribute("class", "button is-dark")
+
+                }
             })
-        } else {
+          } else {
             //   Error responses
-            response.json().then(function (error) {
+            response.json().then(function(error){
                 // 400 -> bad request
                 // 401 -> need to reauthorize 
                 // 500 -> internal error
                 // console.log(error);
                 switch (error.errors[0].status) {
                     case 401:
-                        // Authorize error, get a new token
-                        getToken.then(function (response) {
+                            // Authorize error, get a new token
+                            getToken.then(function(response){
                             token = response;
-                            localStorage.setItem("travelAgencytoken", response);
+                            localStorage.setItem("travelAgencytoken",response);
                             // Save new token, then recall the function
-                            getRecommendedHotel(data);
-                        }).catch(function (error) {
+                            getRecommendedHotel(hotelSearchData);
+                        }).catch(function(error){
                             // Report error to page using modal
                         })
                         break;
                     case 400:
-                    // If conditioned the input fields correctly, this shouldn't be a problem
+                        // If conditioned the input fields correctly, this shouldn't be a problem
                     case 500:
-                    // Show there's error with server through modal
-                    default:
+                        // Show there's error with server through modal
+                    default: 
                         console.log('Something went wrong with looking for hotels'); // Uses modal later on
                 }
             })
-        }
-    }).catch(function (error) {
+          }
+    }).catch(function(error){
         // Display connection error
     });
 }
@@ -418,6 +460,9 @@ function hotelSearch() {
 
 searchHotels.addEventListener("click", function () {
     //check if user enter required fields 
+
+    //add loading class to button
+    searchHotels.setAttribute("class", "button is-dark is-loading")
 
     //run hotelSearch()
     hotelSearch();
