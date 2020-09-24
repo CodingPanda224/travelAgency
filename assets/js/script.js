@@ -1,3 +1,10 @@
+//Hotel search button
+var searchHotels = document.getElementById("hotel-search");
+//airport dropdown div
+var airportDropdown = document.getElementById("airport-dropdown")
+var searchAirportCode = document.getElementById("destination-hotel")
+
+
 var token = localStorage.getItem('travelAgencytoken');
 
 const getToken = new Promise(function(resolve, reject) {
@@ -30,8 +37,8 @@ const getToken = new Promise(function(resolve, reject) {
 
 
 
-function searchAirport(cityName){
-    query='?subType=AIRPORT&page%5Blimit%5D=10&page%5Boffset%5D=0&sort=analytics.travelers.score&view=FULL&keyword=' +cityName;
+function searchAirport(hotelCity){
+    query='?subType=AIRPORT&page%5Blimit%5D=10&page%5Boffset%5D=0&sort=analytics.travelers.score&view=FULL&keyword=' +hotelCity;
     
     fetch('https://test.api.amadeus.com/v1/reference-data/locations'+query,
         {
@@ -44,6 +51,41 @@ function searchAirport(cityName){
             response.json().then(function(response){
                 // Shows API respond
                 console.log(response);
+
+               //if invalid value show error box that is coded in html
+                
+                airportDropdown.innerHTML = "";
+
+                if (response.data.length === 0) {
+                    //show error 
+                } else {
+
+                    //create dropdown of airports
+                    var userSelectsAirport = document.createElement("p")
+                    userSelectsAirport.innerHTML = "Select the aiport you are arriving at: " 
+
+                    //create select tag
+                    var airportSelection = document.createElement("select")
+                    airportSelection.setAttribute("name", "airports")
+                    airportSelection.setAttribute("id", "select-airport")
+
+                    //append select tag and p tag to airport dropdown div
+                    airportDropdown.appendChild(userSelectsAirport);
+                    airportDropdown.appendChild(airportSelection);
+
+                    //loop through airport names array and display as options in dropdown
+                    for (i = 0; i < response.data.length; i++) {
+                        var airports = document.createElement("option")
+                        airports.setAttribute("value", response.data[i].iataCode)
+                        airports.innerHTML = response.data[i].name
+
+                        //append <option> selections to <select> tag in html
+                        airportSelection.appendChild(airports) 
+                    }
+                }//end of else
+
+                //airportSelection.addEventListener("change", getSelectedHotelValue)
+                
             })
           } else {
             //   Error responses
@@ -73,22 +115,32 @@ function searchAirport(cityName){
                 }
             })
           }
+    
     }).catch(function(error){
         // Display connection error
     });
 }
 
-function getRecommendedHotel(data){
+//function getSelectedHotelValue(){    
+    
+    //console.log(chosenAirport);
+
+    //localStorage.setItem("airport city code", JSON.stringify(chosenAirport));
+    
+    //return chosenAirport; 
+  //}
+
+function getRecommendedHotel(hotelSearchData){
     query='?radius=20&radiusUnit=MILE&amenities=&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=NONE&sort=NONE' 
     
-    if (data.cityCode) query = query + '&cityCode=' + data.cityCode;
-    if (data.checkInDate) query = query + '&checkInDate=' + data.checkInDate;
-    if (data.checkOutDate) query = query + '&checkOutDate=' + data.checkOutDate;
-    if (data.returnDate) query = query + '&returnDate=' + data.returnDate;
-    if (data.roomQuantity) query = query + '&roomQuantity=' + data.roomQuantity;
-    if (data.adults) query = query + '&adults=' + data.adults;
-    if (data.childAges) query = query + '&childAges=' + data.childAges;
-    if (data.currency) query = query + '&currency=' + data.currency;
+    if (hotelSearchData.cityCode) query = query + '&cityCode=' + hotelSearchData.cityCode;
+    if (hotelSearchData.checkInDate) query = query + '&checkInDate=' + hotelSearchData.checkInDate;
+    if (hotelSearchData.checkOutDate) query = query + '&checkOutDate=' + hotelSearchData.checkOutDate;
+    if (hotelSearchData.returnDate) query = query + '&returnDate=' + hotelSearchData.returnDate;
+    if (hotelSearchData.roomQuantity) query = query + '&roomQuantity=' + hotelSearchData.roomQuantity;
+    if (hotelSearchData.adults) query = query + '&adults=' + hotelSearchData.adults;
+    if (hotelSearchData.childAges) query = query + '&childAges=' + hotelSearchData.childAges;
+    if (hotelSearchData.currency) query = query + '&currency=' + hotelSearchData.currency;
    
     fetch('https://test.api.amadeus.com/v2/shopping/hotel-offers'+query,
         {
@@ -101,6 +153,41 @@ function getRecommendedHotel(data){
             response.json().then(function(response){
                 // Shows API respond
                 console.log(response);
+
+                //clear container
+                $("#recommended-hotels").html("");
+
+                //loop through response array
+                for (var i = 0; i < response.data.length; i++) {
+                    
+                    //get data for one day
+                    var hotelName = response.data[i].hotel.name;
+                    var distance = response.data[i].hotel.hotelDistance.distance;
+                    var checkIn = response.data[i].offers[0].checkInDate;
+                    var checkOut = response.data[i].offers[0].checkInDate;
+                    var guests = response.data[i].offers[0].guests.adults;
+                    var price = response.data[i].offers[0].price.total;
+                    
+                
+
+                    //create layout for contents of div
+                    var divEl = $("<div>").html(
+                        "<div class='column'> <h3>" + hotelName + "</h3><p>Distance from Airport: " + distance + 
+                        "miles</p><p>Check-in Date: " + checkIn + "</p><p>Check-out Date: " + checkOut + "</p><p>Guests: " + guests +
+                        "</p><h5>Price: $" + price + "</h5></div>")
+
+                    divEl.addClass("column hotels");
+
+                    console.log(divEl);
+                    
+
+                    //append element to the container
+                    $("#recommended-hotels").append(divEl)
+
+                     //add loading class to button
+                    searchHotels.setAttribute("class", "button is-dark")
+
+                }
             })
           } else {
             //   Error responses
@@ -195,6 +282,109 @@ function getRecommendedFlight(data){
     });
 }
 
+if (!token) {
+    getToken.then(function(response){
+        token = response;
+        // Start functions
+    }).catch(function(error){
+        // Report error to page
+    })
+}
+
+
+// Example Flight search:
+var searchFlightData = {
+    originLocationCode:'BOS',
+    destinationLocationCode:'PAR',
+    departureDate:'2020-10-01',
+    returnDate:'',
+    adults:2,
+    children:0,
+    infants:0,
+    travelClass:'ECONOMY',
+    nonStop:'false',
+    currencyCode:'USD'
+}
+// getRecommendedFlight(searchFlightData);
+
+
+//Function searching for Hotels
+function hotelSearch () {
+     
+    //user's destination input
+    var hotelCity = document.getElementById("destination-hotel").value
+
+    //fetch airport code for hotel
+    searchAirport(hotelCity);
+
+    var getAirportDropdown = document.getElementById("select-airport");
+    var chosenAirport = getAirportDropdown.options[getAirportDropdown.selectedIndex].value;
+
+    //user start date
+    var startDate = document.getElementById("hotel-starting-date").value
+
+    //user end date 
+    var endDate = document.getElementById("hotel-ending-date").value
+
+    //user room number
+    var roomNumber = document.getElementById("room-number").value
+
+    //user adults
+    var adultNumber = document.getElementById("room-number").value
+
+    //userages of children
+    var childrenAges = document.getElementById("children-ages").value
+
+    //Hotel search Variable
+    var searchHotelData = {
+    cityCode: chosenAirport,
+    checkInDate : startDate,
+    checkOutDate : endDate,
+    roomQuantity : roomNumber,
+    adults : adultNumber,
+    childAges: childrenAges, //  comma seperated, user input
+    currency : 'USD'
+    }
+
+    console.log(searchHotelData);
+
+    //store objects to local storage
+    if (hotelCity.length > 0 && 
+        startDate.length > 0 &&
+        endDate.length > 0 &&
+        roomNumber.length > 0 &&
+        adultNumber.length > 0) {
+        var save = {
+            endLocation: hotelCity,
+            tripStart: startDate,
+            tripEnd: endDate,
+            rooms: roomNumber,
+            adults: adultNumber,
+            children: childrenAges
+        }
+        var hotelInfo = JSON.parse(localStorage.getItem("hotel stay"))
+        if (hotelInfo != undefined) {
+            hotelInfo[hotelInfo.length] = save
+            localStorage.setItem("hotel stay", JSON.stringify(hotelInfo))
+        }
+        else {
+            var hotelInfo = [save]
+            localStorage.setItem("hotel stay", JSON.stringify(hotelInfo))
+        }
+    }
+
+    //if user doesn't enter a destination
+    //if (hotelCity === "" || startDate === "" || endDate === "") {
+        //console.log("ERROR");
+    //}
+
+    //console.log(searchHotelData);
+
+    //search for recommended hotels
+    getRecommendedHotel(searchHotelData);
+
+}
+
 // NavBar Usage
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -247,100 +437,22 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Get the element with id="defaultOpen" and click on it
   document.getElementById("defaultOpen").click();
-//Function searching for Hotels
-function hotelSearch () {
-    //console.log("hello")
-
-    //grab user's origin input
-    var origin = document.getElementById("origin").value
-
-    //grab user's destination input
-    var destination = document.getElementById("destination").value
-
-    //grab start date
-    var startDate = document.getElementById("starting-date").value
-
-    //grab end date 
-    var endDate = document.getElementById("ending-date").value
-
-    //store objects to local storage
-    if (destination.length > 0 && 
-        origin.length > 0 &&
-        startDate.length > 0 &&
-        endDate.length > 0) {
-        var save = {
-            endLocation: destination,
-            startingLocation: origin,
-            tripStart: startDate,
-            tripEnd: endDate
-        }
-        var tripInfo = JSON.parse(localStorage.getItem("trips"))
-        if (tripInfo != undefined) {
-            tripInfo[tripInfo.length] = save
-            localStorage.setItem("trips", JSON.stringify(tripInfo))
-        }
-        else {
-            var tripInfo = [save]
-            localStorage.setItem("trips", JSON.stringify(tripInfo))
-        }
-    }
-
-    //if user doesn't enter a destination
-    if (destination === "" || origin === "" || startDate === "" || endDate === "") {
-        console.log("ERROR");
-    }
-
-    //fetch hotel information
-    
-
-    //create container for hotel search results
 
 
-    //loop through array to make boxes for each result option
-
-
-}
 
 searchHotels.addEventListener("click", function () {
+    //check if user enter required fields 
+
+    //add loading class to button
+    searchHotels.setAttribute("class", "button is-dark is-loading")
+
+    //run hotelSearch()
     hotelSearch();
+
 });
 
-if (!token) {
-    getToken.then(function(response){
-        token = response;
-        // Start functions
-    }).catch(function(error){
-        // Report error to page
-    })
-}
+searchAirportCode.addEventListener("blur", function() {
+    //have error check for required
+    if (searchAirportCode.value)searchAirport(searchAirportCode.value);
+})
 
-// searchAirport('London');
-
-// Example Flight search:
-var searchFlightData = {
-    originLocationCode:'BOS',
-    destinationLocationCode:'PAR',
-    departureDate:'2020-10-01',
-    returnDate:'',
-    adults:2,
-    children:0,
-    infants:0,
-    travelClass:'ECONOMY',
-    nonStop:'false',
-    currencyCode:'USD'
-}
-// getRecommendedFlight(searchFlightData);
-
-
-// Example of Hotel search
-var searchHotelData = {
-    cityCode:'MCO',  // Use airport code here
-    checkInDate : '2020-10-05',
-    checkOutDate : '2020-10-08',
-    roomQuantity : 1,
-    adults : 2,
-    childAges: '14, 12', //  comma seperated, user input
-    currency : 'USD'
-}
-
-getRecommendedHotel(searchHotelData);

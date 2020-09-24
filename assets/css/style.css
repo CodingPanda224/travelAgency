@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+.hotels {
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+
+#hide {
+    visibility: hidden;
+}
+
+=======
 /* Set height of body and the document to 100% to enable "full page tabs" */
 body, html {
     height: 100%;
@@ -40,3 +52,4 @@ body, html {
   #News {background-color: green;}
   #Contact {background-color: blue;}
   #About {background-color: orange;} */
+>>>>>>> develop
