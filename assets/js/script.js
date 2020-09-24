@@ -1,3 +1,7 @@
+//Flight Search button
+var searchFlights = document.getElementById("flight-search");
+//Hotel search button
+var searchHotels = document.getElementById("hotel-search");
 var token = localStorage.getItem('travelAgencytoken');
 
 const getToken = new Promise(function(resolve, reject) {
@@ -29,7 +33,7 @@ const getToken = new Promise(function(resolve, reject) {
 });
 
 
-
+// 
 function searchAirport(cityName){
     query='?subType=AIRPORT&page%5Blimit%5D=10&page%5Boffset%5D=0&sort=analytics.travelers.score&view=FULL&keyword=' +cityName;
     
@@ -343,4 +347,5 @@ var searchHotelData = {
     currency : 'USD'
 }
 
-getRecommendedHotel(searchHotelData);
+// getRecommendedHotel(searchHotelData);
+

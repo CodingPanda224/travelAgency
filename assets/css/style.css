@@ -11,11 +11,12 @@ body, html {
     background-repeat: no-repeat;
     padding: 5%;
   }
+
   /* Style tab links */
   .tablink {
     background-color: white;
     color: black;
-    float: left;
+    /* float: left; */
     border: none;
     outline: none;
     cursor: pointer;
