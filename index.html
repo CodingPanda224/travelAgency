@@ -81,7 +81,7 @@
                 <div class="column">
                     <div class="field">
                         <p class="control has-icons-left">
-                          <input class="input" type="text" placeholder="Staying Where" id="destination">
+                          <input class="input" type="text" placeholder="Staying Where" id="destination-hotel">
                           <span class="icon is-small is-left">
                             <!-- add an icon -->
                             <i class="fas fa-lock"></i>
@@ -111,8 +111,9 @@
                         </p>
                       </div>
                 </div>
-            </div> <!-- end of first row of input fields-->
+            </div> <!-- END of first row of input fields-->
 
+            <!-- room and people input fields -->
             <div class="columns is mobile">
               <div class="column">
                 <input class="input" type="number" min="0" placeholder="How many ROOMS?" id="room-number">
@@ -125,17 +126,20 @@
               <div class="column">
                 <input class="input" type="text"  placeholder="Ages of Children" id="children-ages">
               </div>
-            </div>
+            </div> <!-- END of room and people input fields-->
             
             <!-- airport dropdown container-->
             <div id="airport-dropdown"></div>
 
-
             <button class="button is-dark" id="hotel-search">Search</button>
             <!-- add the 'is-loading' class when fetching API -->
 
-        </div> <!-- end of container -->
-    </section>
+        </div> <!-- end of search input container -->
+
+        <!-- recommended hotels container-->
+        <div class="container is-fluid" id="recommended-hotels"></div>
+   
+      </section>
 
     <!-- Summary of Trip -->
     <div></div>

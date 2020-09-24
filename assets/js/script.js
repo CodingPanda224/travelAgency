@@ -116,7 +116,7 @@ function searchAirport(hotelCity){
 function getSelectedHotelValue(){    
     var getAirportDropdown = document.getElementById("select-airport");
     var chosenAirport = getAirportDropdown.options[getAirportDropdown.selectedIndex].value;
-    //console.log(chosenAirport);
+    console.log(chosenAirport);
 
     localStorage.setItem("airport city code", JSON.stringify(chosenAirport));
 
@@ -274,7 +274,7 @@ var searchFlightData = {
 function hotelSearch () {
      
     //user's destination input
-    var hotelCity = document.getElementById("destination").value
+    var hotelCity = document.getElementById("destination-hotel").value
 
     //fetch airport code for hotel
     searchAirport(hotelCity);
@@ -322,11 +322,11 @@ function hotelSearch () {
         var hotelInfo = JSON.parse(localStorage.getItem("hotel stay"))
         if (hotelInfo != undefined) {
             hotelInfo[hotelInfo.length] = save
-            localStorage.setItem("trips", JSON.stringify(hotelInfo))
+            localStorage.setItem("hotel stay", JSON.stringify(hotelInfo))
         }
         else {
             var hotelInfo = [save]
-            localStorage.setItem("trips", JSON.stringify(hotelInfo))
+            localStorage.setItem("hotel stay", JSON.stringify(hotelInfo))
         }
     }
 
