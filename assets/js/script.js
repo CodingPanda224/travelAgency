@@ -454,7 +454,7 @@ function hotelSearch() {
     //console.log(searchHotelData);
 
     //search for recommended hotels
-    //getRecommendedHotel(searchHotelData);
+    getRecommendedHotel(searchHotelData);
 
 }
 
