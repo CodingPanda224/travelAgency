@@ -3,8 +3,6 @@ var searchHotels = document.getElementById("hotel-search");
 //airport dropdown div
 var airportDropdown = document.getElementById("airport-dropdown")
 var searchAirportCode = document.getElementById("destination-hotel")
-
-
 var token = localStorage.getItem('travelAgencytoken');
 
 const getToken = new Promise(function(resolve, reject) {
