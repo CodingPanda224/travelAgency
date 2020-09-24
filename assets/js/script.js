@@ -119,8 +119,11 @@ function getSelectedHotelValue(){
     //console.log(chosenAirport);
 
     localStorage.setItem("airport city code", JSON.stringify(chosenAirport));
+
+    //search for recommended hotels
+    //getRecommendedHotel(searchHotelData);
     
-    return chosenAirport; 
+    //return chosenAirport; 
   }
 
 function getRecommendedHotel(data){
@@ -293,7 +296,7 @@ function hotelSearch () {
 
     //Hotel search Variable
     var searchHotelData = {
-    cityCode: JSON.parse(localStorage.getItem("aiport city code")),
+    cityCode: JSON.parse(localStorage.getItem("airport city code")),
     checkInDate : startDate,
     checkOutDate : endDate,
     roomQuantity : roomNumber,
@@ -332,10 +335,7 @@ function hotelSearch () {
         //console.log("ERROR");
     //}
 
-    console.log(searchHotelData);
-
-      //search for recommended hotels
-      //getRecommendedHotel(searchHotelData);
+    //console.log(searchHotelData);
 
 }
 
