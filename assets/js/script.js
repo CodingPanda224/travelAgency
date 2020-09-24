@@ -3,6 +3,8 @@ var searchHotels = document.getElementById("hotel-search");
 //airport dropdown div
 var airportDropdown = document.getElementById("airport-dropdown")
 
+var searchAirportCode = document.getElementById("destination-hotel")
+
 
 var token = localStorage.getItem('travelAgencytoken');
 
@@ -51,32 +53,39 @@ function searchAirport(hotelCity){
                 // Shows API respond
                 console.log(response);
 
-                //console.log(response.data[0]);
+               //if invalid value show error box that is coded in html
+                
+                airportDropdown.innerHTML = "";
 
-                //create dropdown of airports
-                var userSelectsAirport = document.createElement("p")
-                userSelectsAirport.innerHTML = "Select the aiport you are arriving at: " 
+                if (response.data.length === 0) {
+                    //show error 
+                } else {
 
-                //create select tag
-                var airportSelection = document.createElement("select")
-                airportSelection.setAttribute("name", "airports")
-                airportSelection.setAttribute("id", "select-airport")
+                    //create dropdown of airports
+                    var userSelectsAirport = document.createElement("p")
+                    userSelectsAirport.innerHTML = "Select the aiport you are arriving at: " 
 
-                //append select tag and p tag to airport dropdown div
-                airportDropdown.appendChild(userSelectsAirport);
-                airportDropdown.appendChild(airportSelection);
+                    //create select tag
+                    var airportSelection = document.createElement("select")
+                    airportSelection.setAttribute("name", "airports")
+                    airportSelection.setAttribute("id", "select-airport")
 
-                //loop through airport names array and display as options in dropdown
-                for (i = 0; i < response.data.length; i++) {
-                    var airports = document.createElement("option")
-                    airports.setAttribute("value", response.data[i].address.cityCode)
-                    airports.innerHTML = response.data[i].name
+                    //append select tag and p tag to airport dropdown div
+                    airportDropdown.appendChild(userSelectsAirport);
+                    airportDropdown.appendChild(airportSelection);
 
-                    //append <option> selections to <select> tag in html
-                    airportSelection.appendChild(airports) 
-                }
+                    //loop through airport names array and display as options in dropdown
+                    for (i = 0; i < response.data.length; i++) {
+                        var airports = document.createElement("option")
+                        airports.setAttribute("value", response.data[i].iataCode)
+                        airports.innerHTML = response.data[i].name
 
-                airportSelection.addEventListener("change", getSelectedHotelValue)
+                        //append <option> selections to <select> tag in html
+                        airportSelection.appendChild(airports) 
+                    }
+                }//end of else
+
+                //airportSelection.addEventListener("change", getSelectedHotelValue)
                 
             })
           } else {
@@ -113,18 +122,14 @@ function searchAirport(hotelCity){
     });
 }
 
-function getSelectedHotelValue(){    
-    var getAirportDropdown = document.getElementById("select-airport");
-    var chosenAirport = getAirportDropdown.options[getAirportDropdown.selectedIndex].value;
-    console.log(chosenAirport);
+//function getSelectedHotelValue(){    
+    
+    //console.log(chosenAirport);
 
-    localStorage.setItem("airport city code", JSON.stringify(chosenAirport));
-
-    //search for recommended hotels
-    //getRecommendedHotel(searchHotelData);
+    //localStorage.setItem("airport city code", JSON.stringify(chosenAirport));
     
     //return chosenAirport; 
-  }
+  //}
 
 function getRecommendedHotel(data){
     query='?radius=20&radiusUnit=MILE&amenities=&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=NONE&sort=NONE' 
@@ -253,7 +258,6 @@ if (!token) {
 }
 
 
-
 // Example Flight search:
 var searchFlightData = {
     originLocationCode:'BOS',
@@ -279,6 +283,9 @@ function hotelSearch () {
     //fetch airport code for hotel
     searchAirport(hotelCity);
 
+    var getAirportDropdown = document.getElementById("select-airport");
+    var chosenAirport = getAirportDropdown.options[getAirportDropdown.selectedIndex].value;
+
     //user start date
     var startDate = document.getElementById("hotel-starting-date").value
 
@@ -296,7 +303,7 @@ function hotelSearch () {
 
     //Hotel search Variable
     var searchHotelData = {
-    cityCode: JSON.parse(localStorage.getItem("airport city code")),
+    cityCode: chosenAirport,
     checkInDate : startDate,
     checkOutDate : endDate,
     roomQuantity : roomNumber,
@@ -304,6 +311,8 @@ function hotelSearch () {
     childAges: childrenAges, //  comma seperated, user input
     currency : 'USD'
     }
+
+    console.log(searchHotelData);
 
     //store objects to local storage
     if (hotelCity.length > 0 && 
@@ -337,9 +346,21 @@ function hotelSearch () {
 
     //console.log(searchHotelData);
 
+    //search for recommended hotels
+    //getRecommendedHotel(searchHotelData);
+
 }
 
 searchHotels.addEventListener("click", function () {
+    //check if user enter required fields 
+
+    //run hotelSearch()
     hotelSearch();
+
 });
+
+searchAirportCode.addEventListener("blur", function() {
+    //have error check for required
+    if (searchAirportCode.value)searchAirport(searchAirportCode.value);
+})
 
