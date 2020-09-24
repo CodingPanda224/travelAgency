@@ -158,28 +158,33 @@ function getRecommendedHotel(hotelSearchData){
                 $("#recommended-hotels").html("");
 
                 //loop through response array
-                //for (var i = 0; i<6; i++) {
+                for (var i = 0; i < response.data.length; i++) {
                     
                     //get data for one day
-                    var hotelName = response.data[0].hotel.name;
-                    var distance = response.data[0].hotel.hotelDistance.distance
-                    var checkIn = response.data[0].offers[0].checkInDate
-                    var checkOut = response.data[0].offers[0].checkInDate
-                    var guests = response.data[0].offers[0].guests
-                    var price = response.data[0].offers[0].price.total
-                //}
-
-                //create layout for contents of div
-                var divEl = $("<div>").html(
-                    "<div class='column'> <h3>" + hotelName + "</h3><p>Distance from Airport: " + distance + 
-                    "</p><p>Check-in Date: " + checkIn + "</p><p>Check-out Date: " + checkOut + "</p><p>Guests: " + guests +
-                    "</p><h5>Price: " + price + "</h5>")
-
-                divEl.addClass("column hotels");
+                    var hotelName = response.data[i].hotel.name;
+                    var distance = response.data[i].hotel.hotelDistance.distance;
+                    var checkIn = response.data[i].offers[0].checkInDate;
+                    var checkOut = response.data[i].offers[0].checkInDate;
+                    var guests = response.data[i].offers[0].guests.adults;
+                    var price = response.data[i].offers[0].price.total;
+                    
                 
 
-                //append element to the container
-                $("recommended-hotels").append(divEl)
+                    //create layout for contents of div
+                    var divEl = $("<div>").html(
+                        "<div class='column'> <h3>" + hotelName + "</h3><p>Distance from Airport: " + distance + 
+                        "miles</p><p>Check-in Date: " + checkIn + "</p><p>Check-out Date: " + checkOut + "</p><p>Guests: " + guests +
+                        "</p><h5>Price: $" + price + "</h5></div>")
+
+                    divEl.addClass("column hotels").attr("style= 'outline: 1px solid grey; border-radius: 10px;'");
+
+                    console.log(divEl);
+                    
+
+                    //append element to the container
+                    $("#recommended-hotels").append(divEl)
+
+                }
             })
           } else {
             //   Error responses
