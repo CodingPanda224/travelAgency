@@ -2,7 +2,6 @@
 var searchHotels = document.getElementById("hotel-search");
 //airport dropdown div
 var airportDropdown = document.getElementById("airport-dropdown")
-
 var searchAirportCode = document.getElementById("destination-hotel")
 
 
@@ -131,17 +130,17 @@ function searchAirport(hotelCity){
     //return chosenAirport; 
   //}
 
-function getRecommendedHotel(data){
+function getRecommendedHotel(hotelSearchData){
     query='?radius=20&radiusUnit=MILE&amenities=&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=NONE&sort=NONE' 
     
-    if (data.cityCode) query = query + '&cityCode=' + data.cityCode;
-    if (data.checkInDate) query = query + '&checkInDate=' + data.checkInDate;
-    if (data.checkOutDate) query = query + '&checkOutDate=' + data.checkOutDate;
-    if (data.returnDate) query = query + '&returnDate=' + data.returnDate;
-    if (data.roomQuantity) query = query + '&roomQuantity=' + data.roomQuantity;
-    if (data.adults) query = query + '&adults=' + data.adults;
-    if (data.childAges) query = query + '&childAges=' + data.childAges;
-    if (data.currency) query = query + '&currency=' + data.currency;
+    if (hotelSearchData.cityCode) query = query + '&cityCode=' + hotelSearchData.cityCode;
+    if (hotelSearchData.checkInDate) query = query + '&checkInDate=' + hotelSearchData.checkInDate;
+    if (hotelSearchData.checkOutDate) query = query + '&checkOutDate=' + hotelSearchData.checkOutDate;
+    if (hotelSearchData.returnDate) query = query + '&returnDate=' + hotelSearchData.returnDate;
+    if (hotelSearchData.roomQuantity) query = query + '&roomQuantity=' + hotelSearchData.roomQuantity;
+    if (hotelSearchData.adults) query = query + '&adults=' + hotelSearchData.adults;
+    if (hotelSearchData.childAges) query = query + '&childAges=' + hotelSearchData.childAges;
+    if (hotelSearchData.currency) query = query + '&currency=' + hotelSearchData.currency;
    
     fetch('https://test.api.amadeus.com/v2/shopping/hotel-offers'+query,
         {
@@ -154,6 +153,33 @@ function getRecommendedHotel(data){
             response.json().then(function(response){
                 // Shows API respond
                 console.log(response);
+
+                //clear container
+                $("#recommended-hotels").html("");
+
+                //loop through response array
+                //for (var i = 0; i<6; i++) {
+                    
+                    //get data for one day
+                    var hotelName = response.data[0].hotel.name;
+                    var distance = response.data[0].hotel.hotelDistance.distance
+                    var checkIn = response.data[0].offers[0].checkInDate
+                    var checkOut = response.data[0].offers[0].checkInDate
+                    var guests = response.data[0].offers[0].guests
+                    var price = response.data[0].offers[0].price.total
+                //}
+
+                //create layout for contents of div
+                var divEl = $("<div>").html(
+                    "<div class='column'> <h3>" + hotelName + "</h3><p>Distance from Airport: " + distance + 
+                    "</p><p>Check-in Date: " + checkIn + "</p><p>Check-out Date: " + checkOut + "</p><p>Guests: " + guests +
+                    "</p><h5>Price: " + price + "</h5>")
+
+                divEl.addClass("column hotels");
+                
+
+                //append element to the container
+                $("recommended-hotels").append(divEl)
             })
           } else {
             //   Error responses
@@ -347,7 +373,7 @@ function hotelSearch () {
     //console.log(searchHotelData);
 
     //search for recommended hotels
-    //getRecommendedHotel(searchHotelData);
+    getRecommendedHotel(searchHotelData);
 
 }
 
