@@ -36,6 +36,11 @@ body, html {
     height: 100%;
   }
 
+  .hotels {
+      background-color: white;
+      border: 1px solid grey;
+      border-radius: 10px;
+  }
   /* .hide {
     visibility: hidden;
   }

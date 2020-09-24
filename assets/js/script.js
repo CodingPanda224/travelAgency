@@ -247,11 +247,11 @@ function getRecommendedHotel(hotelSearchData){
 
                     //create layout for contents of div
                     var divEl = $("<div>").html(
-                        "<div class='column'> <h3>" + hotelName + "</h3><p>Distance from Airport: " + distance + 
+                        "<div class='column hotels'> <h3>" + hotelName + "</h3><p>Distance from Airport: " + distance + 
                         "miles</p><p>Check-in Date: " + checkIn + "</p><p>Check-out Date: " + checkOut + "</p><p>Guests: " + guests +
                         "</p><h5>Price: $" + price + "</h5></div>")
 
-                    divEl.addClass("column hotels");
+                    //divEl.addClass("column hotels");
 
                     console.log(divEl);
                     
