@@ -116,8 +116,11 @@ function searchAirport(hotelCity){
 function getSelectedHotelValue(){    
     var getAirportDropdown = document.getElementById("select-airport");
     var chosenAirport = getAirportDropdown.options[getAirportDropdown.selectedIndex].value;
-    console.log(chosenAirport);
-    return chosenAirport;
+    //console.log(chosenAirport);
+
+    localStorage.setItem("airport city code", JSON.stringify(chosenAirport));
+    
+    return chosenAirport; 
   }
 
 function getRecommendedHotel(data){
@@ -290,7 +293,7 @@ function hotelSearch () {
 
     //Hotel search Variable
     var searchHotelData = {
-    cityCode: 'MIA',
+    cityCode: JSON.parse(localStorage.getItem("aiport city code")),
     checkInDate : startDate,
     checkOutDate : endDate,
     roomQuantity : roomNumber,
@@ -300,22 +303,27 @@ function hotelSearch () {
     }
 
     //store objects to local storage
-    if (destination.length > 0 && 
+    if (hotelCity.length > 0 && 
         startDate.length > 0 &&
-        endDate.length > 0) {
+        endDate.length > 0 &&
+        roomNumber.length > 0 &&
+        adultNumber.length > 0) {
         var save = {
             endLocation: hotelCity,
             tripStart: startDate,
-            tripEnd: endDate
+            tripEnd: endDate,
+            rooms: roomNumber,
+            adults: adultNumber,
+            children: childrenAges
         }
-        var tripInfo = JSON.parse(localStorage.getItem("trips"))
-        if (tripInfo != undefined) {
-            tripInfo[tripInfo.length] = save
-            localStorage.setItem("trips", JSON.stringify(tripInfo))
+        var hotelInfo = JSON.parse(localStorage.getItem("hotel stay"))
+        if (hotelInfo != undefined) {
+            hotelInfo[hotelInfo.length] = save
+            localStorage.setItem("trips", JSON.stringify(hotelInfo))
         }
         else {
-            var tripInfo = [save]
-            localStorage.setItem("trips", JSON.stringify(tripInfo))
+            var hotelInfo = [save]
+            localStorage.setItem("trips", JSON.stringify(hotelInfo))
         }
     }
 
@@ -327,7 +335,7 @@ function hotelSearch () {
     console.log(searchHotelData);
 
       //search for recommended hotels
-      getRecommendedHotel(searchHotelData);
+      //getRecommendedHotel(searchHotelData);
 
 }
 
