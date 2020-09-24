@@ -1,26 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
     <title>Travel Agency</title>
+=======
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Agency</title>
+  <script src="https://use.fontawesome.com/a6ec0e93df.js"></script>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
+>>>>>>> develop
 </head>
+
 <body>
-    <header>
-        <h1>Trip Planner</h1>
-    </header>
 
-    <!-- Add a Trip -->
-    <div></div>
+  <!-- Here is the Nav Bar  -->
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <!-- Temp Logo to be added -->
+      <a class="navbar-item" href="index.html">
+        <img src="./assets/img/4115501.jpg">
+      </a>
 
-    <!-- Select Destination and Budget -->
-    <div></div>
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+        data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
 
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="index.html">
+          Travel Agency
+        </a>
+
+
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            More Travel
+          </a>
+
+          <div class="navbar-dropdown">
+            <!-- <a class="navbar-item">
+              Flights
+            </a>
+
+<<<<<<< HEAD
     <!-- Plane Info -->
     
+=======
+            <a class="navbar-item">
+              Hotels
+            </a>
+>>>>>>> develop
 
+            <a class="navbar-item">
+              Combination
+            </a> -->
+            <a class="navbar-item" href="./pages/about.html">
+              About
+            </a>
+            <a class="navbar-item" href="./pages/contactus.html">
+              Contact
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item">
+              Report an issue
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+            <a class="button is-dark">
+              <strong>Sign up</strong>
+            </a>
+            <a class="button is-light">
+              Log in
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+
+    <div class="searchBox">
+      <!-- Tabs for services -->
+    <div class="container">
+      <button class="tablink" onclick="openPage('Flights', this, 'red')" id="defaultOpen">Flights</button>
+      <button class="tablink" onclick="openPage('Hotel', this, 'green')" >Hotel</button>
+      <!-- <button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
+      <button class="tablink" onclick="openPage('About', this, 'orange')">About</button> -->
+
+      <div id="Flights" class="tabcontent">
+        <section class="section">
+          <div class="container is-fluid hide">
+              <!-- search inputs -->
+              <div class="columns is mobile">
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Starting from" id="origin">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Going to" id="destination">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="date" placeholder="mm/dd/yyyy" id="starting-date">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="date" placeholder="mm/dd/yyyy" id="ending-date">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+              </div>
+              
+              <button class="button is-dark" id="flight-search">Search</button>
+              <!-- add the 'is-loading' class when fetching API -->
+  
+          </div> <!-- end of container -->
+      </section>
+      </div>
+
+      <div id="Hotel" class="tabcontent">
+        <section class="section">
+          <div class="container is-fluid hide">
+              <!-- search inputs -->
+              <div class="columns is mobile">
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Starting from" id="origin">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Going to" id="destination">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="date" placeholder="mm/dd/yyyy" id="starting-date">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+                  <div class="column">
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="date" placeholder="mm/dd/yyyy" id="ending-date">
+                            <span class="icon is-small is-left">
+                              <!-- add an icon -->
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  </div>
+              </div>
+              
+              <button class="button is-dark" id="hotel-search">Search</button>
+              <!-- add the 'is-loading' class when fetching API -->
+  
+          </div> <!-- end of container -->
+      </section>
+      </div>
     <!-- Hotel Info -->
+<<<<<<< HEAD
     <section class="section">
         <div class="container is-fluid">
             <!-- search inputs -->
@@ -87,11 +288,51 @@
         <section class="container is-fluid" id="recommended-hotels"></section>
    
       </section>
+=======
+>>>>>>> develop
 
-    <!-- Summary of Trip -->
-    <div></div>
 
+<<<<<<< HEAD
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./assets/js/script.js"></script>
+=======
+      <div id="Contact" class="tabcontent">
+        <h3>Contact</h3>
+        <p>Get in touch, or swing by for a cup of coffee.</p>
+      </div>
+
+      <div id="About" class="tabcontent">
+        <h3>About</h3>
+        <p>Who we are and what we do.</p>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  <!-- Add a Trip -->
+  <div></div>
+
+  <!-- Select Destination and Budget -->
+  <div></div>
+
+  <!-- Plane Info -->
+  <div></div>
+
+  <!-- Hotel Info -->
+
+
+  <!-- Summary of Trip -->
+  <div></div>
+
+  <script src="./assets/js/script.js"></script>
+>>>>>>> develop
 </body>
+
+<footer>
+  <a href="https://www.freepik.com/vectors/logo">Logo vector created by freepik - www.freepik.com</a>
+</footer>
+
 </html>

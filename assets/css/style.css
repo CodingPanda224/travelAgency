@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .hotels {
     border: 1px solid grey;
     border-radius: 5px;
@@ -8,3 +9,47 @@
     visibility: hidden;
 }
 
+=======
+/* Set height of body and the document to 100% to enable "full page tabs" */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial;
+  }
+  
+  .searchBox{
+    background-image: url("../img/hero.jpg");
+    background-position: bottom;
+    background-repeat: no-repeat;
+    padding: 5%;
+  }
+  /* Style tab links */
+  .tablink {
+    background-color: white;
+    color: black;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 25%;
+  }
+  
+  .tablink:hover {
+    background-color: lightgrey;
+  }
+  
+  /* Style the tab content (and add height:100% for full page content) */
+  .tabcontent {
+    color: black;
+    display: none;
+    padding: 100px 20px;
+    height: 100%;
+  }
+  
+  /* #Home {background-color: red;}
+  #News {background-color: green;}
+  #Contact {background-color: blue;}
+  #About {background-color: orange;} */
+>>>>>>> develop
