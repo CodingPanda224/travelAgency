@@ -176,13 +176,16 @@ function getRecommendedHotel(hotelSearchData){
                         "miles</p><p>Check-in Date: " + checkIn + "</p><p>Check-out Date: " + checkOut + "</p><p>Guests: " + guests +
                         "</p><h5>Price: $" + price + "</h5></div>")
 
-                    divEl.addClass("column hotels").attr("style= 'outline: 1px solid grey; border-radius: 10px;'");
+                    divEl.addClass("column hotels");
 
                     console.log(divEl);
                     
 
                     //append element to the container
                     $("#recommended-hotels").append(divEl)
+
+                     //add loading class to button
+                    searchHotels.setAttribute("class", "button is-dark")
 
                 }
             })
@@ -384,6 +387,9 @@ function hotelSearch () {
 
 searchHotels.addEventListener("click", function () {
     //check if user enter required fields 
+
+    //add loading class to button
+    searchHotels.setAttribute("class", "button is-dark is-loading")
 
     //run hotelSearch()
     hotelSearch();
