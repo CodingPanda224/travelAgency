@@ -8,6 +8,7 @@ var airportDropdown = document.getElementById("airport-dropdown")
 var searchAirportCode = document.getElementById("destination-hotel")
 
 
+
 // NavBar Usage
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -247,9 +248,9 @@ function getRecommendedHotel(hotelSearchData){
 
                     //create layout for contents of div
                     var divEl = $("<div>").html(
-                        "<div class='column hotels'> <h3>" + hotelName + "</h3><p>Distance from Airport: " + distance + 
+                        "<div class='column hotels' id='choose-hotel'> <h3>" + hotelName + "</h3><p>Distance from Airport: " + distance + 
                         "miles</p><p>Check-in Date: " + checkIn + "</p><p>Check-out Date: " + checkOut + "</p><p>Guests: " + guests +
-                        "</p><h5>Price: $" + price + "</h5></div>")
+                        "</p><h5 id='price'>Price: $" + price + "</h5></div>")
 
                     //divEl.addClass("column hotels");
 
@@ -261,6 +262,20 @@ function getRecommendedHotel(hotelSearchData){
 
                      //add loading class to button
                     searchHotels.setAttribute("class", "button is-dark")
+
+                    //hotel divs
+                    var chooseHotel = document.getElementById("choose-hotel");
+                    
+
+                    function hotelPrice() {
+                        var price = document.getElementById("price")
+                        console.log(price.value)
+                        //localStorage.setItem("budget trip", price.value)
+                    }
+                    
+                    chooseHotel.addEventListener('click', function () {
+                        hotelPrice();
+                    })
 
                 }
             })
@@ -473,6 +488,7 @@ searchAirportCode.addEventListener("blur", function () {
     //have error check for required
     if (searchAirportCode.value) searchAirport(searchAirportCode.value);
 })
+
 
 
 
@@ -696,6 +712,8 @@ function flightSearch() {
     
 }
 
+
 searchFlights.addEventListener('click', function () {
     flightSearch();
 })
+
