@@ -5,7 +5,11 @@ body, html {
     font-family: Arial;
   }
   p {
-      color: black;
+      color: white;
+  }
+
+  button {
+      margin-top: 10px;
   }
   
   .searchBox{
@@ -13,6 +17,10 @@ body, html {
     background-position: bottom;
     background-repeat: no-repeat;
     padding: 5%;
+  }
+
+  .hotels p {
+    color: black;
   }
   /* Style tab links */
   .tablink {

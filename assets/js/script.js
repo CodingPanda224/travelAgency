@@ -138,7 +138,7 @@ function searchAirport(hotelCity) {
 
                     //create dropdown of airports
                     var userSelectsAirport = document.createElement("p")
-                    userSelectsAirport.innerHTML = "Select the aiport you are arriving at: "
+                    userSelectsAirport.innerHTML = "Select the airport you are arriving at: "
 
                     //create select tag
                     var airportSelection = document.createElement("select")
