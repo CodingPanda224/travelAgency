@@ -269,8 +269,8 @@ function getRecommendedHotel(hotelSearchData){
 
                     function hotelPrice() {
                         var price = document.getElementById("price")
-                        console.log(price.value)
-                        //localStorage.setItem("budget trip", price.value)
+                        console.log(price.innerText)
+                        localStorage.setItem("budget trip", price.innerText)
                     }
                     
                     chooseHotel.addEventListener('click', function () {
