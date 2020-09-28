@@ -8,6 +8,21 @@ body, html {
       color: white;
   }
 
+  h2 {
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      font-size: x-large;
+      background: grey;
+      border-radius: 10px;
+      margin: 0 350px 20px 350px;
+  }
+
+  h4 {
+      color: white;
+      font-weight: bold;
+  }
+
   button {
       margin-top: 10px;
   }
@@ -19,8 +34,17 @@ body, html {
     padding: 5%;
   }
 
+
   .hotels p {
     color: black;
+  }
+
+  .choice {
+      padding-bottom: 15px;
+  }
+
+  .radio {
+      color: white;
   }
   /* Style tab links */
   .tablink {

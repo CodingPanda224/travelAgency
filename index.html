@@ -95,6 +95,8 @@
       <div id="Flights" class="tabcontent">
         <section class="section">
           <div class="container is-fluid hide">
+            
+            <h2>Search for a Flight:</h2>
 
             <div class="choice">
               <label class="radio">
@@ -108,10 +110,10 @@
             </div>
 
 
-
             <!-- search inputs -->
             <div class="columns is mobile">
               <div class="column">
+                <h4>Starting From:</h4>
                 <div class="field">
                   <p class="control has-icons-left">
                     <input class="input" type="text" placeholder="Starting from" id="origin-airport">
@@ -123,6 +125,7 @@
                 </div>
               </div>
               <div class="column">
+                <h4>Going To:</h4>
                 <div class="field">
                   <p class="control has-icons-left">
                     <input class="input" type="text" placeholder="Going to" id="destination">
@@ -134,6 +137,7 @@
                 </div>
               </div>                   
               <div class="column">
+                <h4>Departure Date:</h4>
                 <div class="field">
                   <p class="control has-icons-left">
                     <input class="input" type="date" placeholder="mm/dd/yyyy" id="depart-date">
@@ -145,6 +149,7 @@
                 </div>
               </div>
               <div class="column" id="flight-return-date">
+                <h4>Arrival Date:</h4>
                 <div class="field">
                   <p class="control has-icons-left">
                     <input class="input" type="date" placeholder="mm/dd/yyyy" id="return-date">
@@ -173,9 +178,11 @@
       <div id="Hotel" class="tabcontent">
         <section class="section">
           <div class="container is-fluid">
+            <h2>Search for a Hotel:</h2>
             <!-- search inputs -->
             <div class="columns is mobile">
               <div class="column">
+                <h4>Location of Stay:</h4>
                 <div class="field">
                   <p class="control has-icons-left">
                     <input class="input" type="text" placeholder="Staying Where" id="destination-hotel">
@@ -187,6 +194,7 @@
                 </div>
               </div>
               <div class="column">
+                <h4>Check-In Date:</h4>
                 <div class="field">
                   <p class="control has-icons-left">
                     <input class="input" type="date" placeholder="mm/dd/yyyy" id="hotel-starting-date">
@@ -198,6 +206,7 @@
                 </div>
               </div>
               <div class="column">
+                <h4>Check-Out Date:</h4>
                 <div class="field">
                   <p class="control has-icons-left">
                     <input class="input" type="date" placeholder="mm/dd/yyyy" id="hotel-ending-date">
@@ -213,15 +222,18 @@
             <!-- room and people input fields -->
             <div class="columns is mobile">
               <div class="column">
-                <input class="input" type="number" min="0" placeholder="How many ROOMS?" id="room-number">
+                <h4>Number of Rooms:</h4>
+                <input class="input" type="number" min="0" placeholder="1" id="room-number">
               </div>
 
               <div class="column">
-                <input class="input" type="number" min="0" placeholder="How many ADULTS?" id="adult-number">
+                <h4>Number of Adults:</h4>
+                <input class="input" type="number" min="0" placeholder="1" id="adult-number">
               </div>
 
               <div class="column">
-                <input class="input" type="text" placeholder="Ages of Children" id="children-ages">
+                <h4>Ages of Children (IF ANY)</h4>
+                <input class="input" type="text" placeholder="" id="children-ages">
               </div>
             </div> <!-- END of room and people input fields-->
 
